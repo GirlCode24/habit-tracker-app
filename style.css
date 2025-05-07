@@ -1,0 +1,393 @@
+:root {
+    --primary: #4a6fa5;
+    --secondary: #ff9a76;
+    --success: #2ecc71;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --light: #fff8f0;
+    --dark: #333;
+    --text: #4a4a4a;
+    --border-radius: 12px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: var(--light);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+    color: var(--primary);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    padding-bottom: 1.5rem;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: var(--secondary);
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+h3 {
+    font-size: 1.8rem;
+    margin-top: 1rem;
+}
+
+h2 {
+    margin-top: 1rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Form Styles */
+#habit-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+#habit-form input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: border 0.3s;
+}
+
+#habit-form input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+#habit-form button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#add-habit-btn {
+    background-color: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+    display: block;
+    margin: 0 auto;
+}
+
+#edit-habit-btn {
+    background-color: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+
+}
+
+/* Stats Cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.8;
+}
+
+/* Habit List */
+#habit-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.habit-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.habit-item:hover {
+    transform: translateY(-3px);
+}
+
+.habit-main h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.habit-main p {
+    color: var(--text);
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}
+
+/* Progress Bar */
+.progress-container {
+    height: 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success), #27ae60);
+    transition: width 0.5s ease;
+}
+
+.status {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Calendar Days */
+.calendar-container {
+    margin: 1.5rem 0;
+}
+
+.calendar-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    flex-wrap: wrap;
+}
+
+.heart-day {
+    background: none;
+    border: 2px solid #e0e0e0;
+    font-size: 1.3rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heart-day:hover {
+    background-color: rgba(74, 111, 165, 0.1);
+    transform: scale(1.1);
+}
+
+.heart-day.filled {
+    color: crimson;
+    border-color: crimson;
+    background-color: rgba(220, 20, 60, 0.1);
+}
+
+.heart-day.missed {
+    color: #999;
+    border-color: #e0e0e0;
+    opacity: 0.7;
+}
+
+.heart-day.future {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Habit Details */
+.habit-details {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.habit-details span {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Action Buttons */
+.habit-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.habit-actions button {
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.complete-btn {
+    background-color: var(--success);
+    color: white;
+}
+
+.complete-btn:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+.edit-btn {
+    background-color: var(--warning);
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #e67e22;
+    transform: translateY(-2px);
+}
+
+.delete-btn {
+    background-color: var(--danger);
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    /* h2{
+        padding: 0 0px;
+    } */
+
+    #habit-form {
+        padding: 1.5rem;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    #habit-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+
+    .habit-actions {
+        flex-direction: column;
+    }
+
+    .habit-actions button {
+        width: 100%;
+    }
+}
+
+/* Animation for interactions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.habit-item {
+    animation: fadeIn 0.5s ease forwards;
+}
