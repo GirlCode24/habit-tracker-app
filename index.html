@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <h1>HABIT TRACKER</h1>
+
+        <!-- Stats at the top for immediate visibility -->
+        <div id="stats-header" class="stats-container">
+            <div class="stat-card" id="total-habits-card">
+                <span class="stat-number" id="total-habits">0</span>
+                <span class="stat-label">Total Habits</span>
+            </div>
+            <div class="stat-card" id="completed-habits-card">
+                <span class="stat-number" id="completed-habits">0</span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-card" id="active-streaks-card">
+                <span class="stat-number" id="active-streaks">0</span>
+                <span class="stat-label">Active Streaks</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-content">
+        <!-- Form section -->
+        <section class="form-section">
+            <h2>Add New Habit</h2>
+            <div id="habit-form" class="habit-form">
+                <input id="habit" placeholder="Habit name (e.g., Drink water)" />
+                <input id="description" placeholder="Goal description" />
+                <input id="duration" type="number" placeholder="Duration in days" />
+            </div>
+            <div class="form-actions">
+                <button id="add-habit-btn" class="primary-btn">Add Habit</button>
+                <button id="edit-habit-btn" class="secondary-btn" style="display: none;">Save Changes</button>
+            </div>
+            </div>
+        </section>
+
+        <!-- Habits list section -->
+        <section class="habits-section">
+            <h2>Your Habits</h2>
+            <div id="habit-list" class="habits-grid">
+                <!-- Habit items will appear here -->
+            </div>
+        </section>
+
+        <!-- Visualization section -->
+        <section id="habit-container" class="visualization-section">
+            <!-- Calendar/streak visualization can go here -->
+        </section>
+    </main>
+
+    <!-- JS -->
+    <script src="habitTracker.js"></script>
+    <script src="ui.js"></script>
+    <script src="storage.js"></script>
+</body>
+
+</html>
