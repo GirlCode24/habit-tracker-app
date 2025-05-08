@@ -1,4 +1,4 @@
-// habitTracker.js
+
 import { 
     loadHabits, 
     saveHabits, 
@@ -10,7 +10,7 @@ import {
 
 let habits = getHabits();
 
-// Helper Functions
+// Start Date and Duration Functions
 function calculateEndDate(startDate, duration) {
     const start = new Date(startDate);
     start.setDate(start.getDate() + parseInt(duration) - 1);
@@ -42,7 +42,7 @@ function groupDaysByWeek(daysArray) {
     
     return weeks;
 }
-
+// Streak Calculation
 function calculateStreak(completedDays) {
     const sorted = [...completedDays].sort().reverse();
     let streak = 0;
@@ -63,7 +63,7 @@ function calculateStreak(completedDays) {
     return streak;
 }
 
-// Core Functions
+//Habit Functions
 export function addHabit(name, description, duration) {
     const startDate = getCurrentDate();
     const endDate = calculateEndDate(startDate, duration);

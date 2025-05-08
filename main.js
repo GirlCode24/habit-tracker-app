@@ -1,80 +1,118 @@
-// main.js
-import { 
-    addHabit, 
-    editHabit, 
-    deleteHabit, 
-    toggleHabitCompletion, 
-    toggleHabitDayCompletion,
-    updateStats,
-    checkForNewDay
-} from './habitTracker.js';
-import { renderHabits } from './ui.js';
+import {
+  addHabit,
+  editHabit,
+  deleteHabit,
+  toggleHabitCompletion,
+  toggleHabitDayCompletion,
+  updateStats,
+  checkForNewDay,
+} from "./habitTracker.js";
+import { renderHabits } from "./ui.js";
+import { getHabits } from './storage.js';
 
 // DOM Elements
-const habitInput = document.getElementById('habit');
-const descriptionInput = document.getElementById('description');
-const durationInput = document.getElementById('duration');
-const addButton = document.getElementById('add-habit-btn');
-const editButton = document.getElementById('edit-habit-btn');
+const habitInput = document.getElementById("habit");
+const descriptionInput = document.getElementById("description");
+const durationInput = document.getElementById("duration");
+const addButton = document.getElementById("add-habit-btn");
+const editButton = document.getElementById("edit-habit-btn");
 let editId = null;
 
 // Initialize
 function initApp() {
-    checkForNewDay();
-    renderHabits();
-    updateStats();
-    
-    // Set up event listeners
-    addButton.addEventListener('click', () => {
-        const name = habitInput.value.trim();
-        const description = descriptionInput.value.trim();
-        const duration = durationInput.value.trim();
+  checkForNewDay();
+  renderHabits();
+  updateStats();
 
-        console.log("Name:", name);
-        console.log("Description:", description);
-        console.log("Duration:", duration);
+  // Set up event listeners
+  addButton.addEventListener("click", () => {
+    const name = habitInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const duration = durationInput.value.trim();
 
-        if (name && duration) {
-            const newHabit = addHabit(name, description, duration);
-            console.log("Habit added:", newHabit);
+    console.log("Name:", name);
+    console.log("Description:", description);
+    console.log("Duration:", duration);
 
-            habitInput.value = '';
-            descriptionInput.value = '';
-            durationInput.value = '';
-            renderHabits();
-            updateStats();
-        } else {
-            alert('Please enter both habit name and duration');
-        }
-    });
+    if (name && duration) {
+      const newHabit = addHabit(name, description, duration);
+      console.log("Habit added:", newHabit);
 
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('delete-btn')) {
-            const id = Number(e.target.dataset.id);
-            deleteHabit(id);
-            renderHabits();
-            updateStats();
-        } else if (e.target.classList.contains('complete-btn')) {
-            const id = Number(e.target.dataset.id);
-            toggleHabitCompletion(id);
-            renderHabits();
-            updateStats();
-        } else if (e.target.classList.contains('heart-day') && !e.target.disabled) {
-            const id = Number(e.target.dataset.id);
-            const date = e.target.dataset.date;
-            toggleHabitDayCompletion(id, date);
-            renderHabits();
-            updateStats();
-        }
-    });
+      habitInput.value = "";
+      descriptionInput.value = "";
+      durationInput.value = "";
+      renderHabits();
+      updateStats();
+    } else {
+      alert("Please enter both habit name and duration");
+    }
+  });
 
-    // Stats header event listeners
-    document.getElementById('total-habits-card').addEventListener('click', () => renderHabits('all'));
-    document.getElementById('completed-habits-card').addEventListener('click', () => renderHabits('completed'));
-    document.getElementById('active-streaks-card').addEventListener('click', () => renderHabits('active'));
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-btn")) {
+      const id = Number(e.target.dataset.id);
+      deleteHabit(id);
+      renderHabits();
+      updateStats();
+    } else if (e.target.classList.contains("complete-btn")) {
+      const id = Number(e.target.dataset.id);
+      toggleHabitCompletion(id);
+      renderHabits();
+      updateStats();
+    } else if (e.target.classList.contains("heart-day") && !e.target.disabled) {
+      const id = Number(e.target.dataset.id);
+      const date = e.target.dataset.date;
+      toggleHabitDayCompletion(id, date);
+      renderHabits();
+      updateStats();
+    } else if (e.target.classList.contains("edit-btn")) {
+      const id = Number(e.target.dataset.id);
+      const habit = getHabits().find((h) => h.id === id);
+
+      if (habit) {
+        habitInput.value = habit.name;
+        descriptionInput.value = habit.description;
+        durationInput.value = habit.goal;
+
+        // Set edit mode
+        editId = id;
+        editButton.style.display = "block";
+        addButton.style.display = "none";
+      }
+    }
+  });
+  editButton.addEventListener("click", () => {
+    const name = habitInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const duration = durationInput.value.trim();
+
+    if (editId && name && duration) {
+      editHabit(editId, name, description, duration);
+      renderHabits();
+      updateStats();
+
+      // Reset form and UI
+      editId = null;
+      habitInput.value = "";
+      descriptionInput.value = "";
+      durationInput.value = "";
+      editButton.style.display = "none";
+      addButton.style.display = "block";
+    }
+  });
+
+  // Stats header event listeners
+  document
+    .getElementById("total-habits-card")
+    .addEventListener("click", () => renderHabits("all"));
+  document
+    .getElementById("completed-habits-card")
+    .addEventListener("click", () => renderHabits("completed"));
+  document
+    .getElementById("active-streaks-card")
+    .addEventListener("click", () => renderHabits("active"));
 }
 
-// Wait for DOM to be ready before initializing
-document.addEventListener('DOMContentLoaded', () => {
-    initApp();
+document.addEventListener("DOMContentLoaded", () => {
+  initApp();
 });
