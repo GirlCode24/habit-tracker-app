@@ -1,14 +1,20 @@
-function renderHabits(filter = 'all') {
-    // updateDashboardStats();
+import { getCurrentDate, getHabits } from './storage.js';
+import { calculateHabitStats, getDaysArray, groupDaysByWeek } from './habitTracker.js';
+
+export function renderHabits(filter = 'all') {
+    const habitList = document.getElementById('habit-list');
+    if (!habitList) return;
+
     habitList.innerHTML = '';
-    habitContainer.innerHTML = '';
+
+    const habits = getHabits(); 
+    const currentDate = getCurrentDate(); 
 
     let filteredHabits = habits;
-
     if (filter === 'completed') {
         filteredHabits = habits.filter(h => calculateHabitStats(h).status === 'Completed');
     } else if (filter === 'active') {
-        filteredHabits = habits.filter(h => h.streak > 0);
+        filteredHabits = habits.filter(h => calculateHabitStats(h).streak > 0);
     }
 
     filteredHabits.forEach(habit => {
@@ -56,7 +62,7 @@ function renderHabits(filter = 'all') {
                                 data-id="${habit.id}" 
                                 data-date="${date}"
                                 title="${title}"
-                            >
+                                ${isFuture ? 'disabled' : ''}>
                                 ${emoji}
                             </button>
                         `;
