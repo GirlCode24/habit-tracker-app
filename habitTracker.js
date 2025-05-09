@@ -67,9 +67,8 @@ function calculateStreak(completedDays) {
 export function addHabit(name, description, duration) {
     const startDate = getCurrentDate();
     const endDate = calculateEndDate(startDate, duration);
-
     const newHabit = {
-        id: Date.now(),
+        id: Date.now().toString(), 
         name,
         description,
         goal: parseInt(duration),
@@ -82,9 +81,12 @@ export function addHabit(name, description, duration) {
         lastUpdated: getCurrentDate(),
         status: "Not started"
     };
-
-    habits.push(newHabit);
-    setHabits(habits);
+    const currentHabits = JSON.parse(localStorage.getItem('habits')) || [];
+    const updatedHabits = [...currentHabits, newHabit];
+    localStorage.setItem('habits', JSON.stringify(updatedHabits)); 
+    habits = updatedHabits;
+    if (setHabits) setHabits(updatedHabits);
+    
     return newHabit;
 }
 
@@ -125,10 +127,12 @@ export function editHabit(id, name, description, duration) {
 }
 
 export function deleteHabit(id) {
-    habits = habits.filter(habit => habit.id !== id);
-    setHabits(habits);
+    const currentHabits = JSON.parse(localStorage.getItem('habits')) || [];
+    const updatedHabits = currentHabits.filter(habit => habit.id !== id);
+    localStorage.setItem('habits', JSON.stringify(updatedHabits));
+    habits = updatedHabits;
+    if (setHabits) setHabits(updatedHabits);
 }
-
 export function toggleHabitCompletion(id) {
     const habit = habits.find(h => h.id === id);
     if (!habit) return;
