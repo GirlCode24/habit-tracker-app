@@ -43,26 +43,26 @@ function groupDaysByWeek(daysArray) {
     return weeks;
 }
 // Streak Calculation
-function calculateStreak(completedDays) {
+export function calculateStreak(completedDays) {
     const sorted = [...completedDays].sort().reverse();
     let streak = 0;
     let current = new Date();
-
+  
     for (let dateStr of sorted) {
-        const date = new Date(dateStr);
-        const diff = Math.floor((current - date) / (1000 * 60 * 60 * 24));
-
-        if (diff === 0 || diff === 1) {
-            streak++;
-            current.setDate(current.getDate() - 1);
-        } else {
-            break;
-        }
+      const date = new Date(dateStr);
+      const diff = Math.floor((current - date) / (1000 * 60 * 60 * 24));
+  
+      if (diff === 0 || diff === 1) {
+        streak++;
+        current.setDate(current.getDate() - 1);
+      } else {
+        break;
+      }
     }
-
+  
     return streak;
-}
-
+  }
+  
 //Habit Functions
 export function addHabit(name, description, duration) {
     const startDate = getCurrentDate();
