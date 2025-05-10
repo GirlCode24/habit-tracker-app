@@ -1,4 +1,3 @@
-
 import { 
     loadHabits, 
     saveHabits, 
@@ -232,4 +231,4 @@ export function checkForNewDay() {
         setHabits(habits);
     }
 }
-export { getDaysArray, groupDaysByWeek };
+export { getDaysArray, groupDaysByWeek }; 

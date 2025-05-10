@@ -7,8 +7,8 @@ import {
   updateStats,
   checkForNewDay,
 } from "./habitTracker.js";
-import { renderHabits } from "./ui.js";
 import { getHabits } from './storage.js';
+import { renderHabits } from "./ui.js";
 
 // DOM Elements
 const habitInput = document.getElementById("habit");
@@ -30,57 +30,45 @@ function initApp() {
     const description = descriptionInput.value.trim();
     const duration = durationInput.value.trim();
 
-    console.log("Name:", name);
-    console.log("Description:", description);
-    console.log("Duration:", duration);
-
     if (name && duration) {
-      const newHabit = addHabit(name, description, duration);
-      console.log("Habit added:", newHabit);
-
+      addHabit(name, description, duration);
       habitInput.value = "";
       descriptionInput.value = "";
       durationInput.value = "";
       renderHabits();
       updateStats();
-    } else {
-      alert("Please enter both habit name and duration");
     }
   });
 
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("delete-btn")) {
-      const id = Number(e.target.dataset.id);
-      deleteHabit(id);
+      deleteHabit(e.target.dataset.id);
       renderHabits();
       updateStats();
-    } else if (e.target.classList.contains("complete-btn")) {
-      const id = Number(e.target.dataset.id);
-      toggleHabitCompletion(id);
+    } 
+    else if (e.target.classList.contains("complete-btn")) {
+      toggleHabitCompletion(e.target.dataset.id);
       renderHabits();
       updateStats();
-    } else if (e.target.classList.contains("heart-day") && !e.target.disabled) {
-      const id = Number(e.target.dataset.id);
-      const date = e.target.dataset.date;
-      toggleHabitDayCompletion(id, date);
+    }
+    else if (e.target.classList.contains("heart-day") && !e.target.disabled) {
+      toggleHabitDayCompletion(e.target.dataset.id, e.target.dataset.date);
       renderHabits();
       updateStats();
-    } else if (e.target.classList.contains("edit-btn")) {
-      const id = Number(e.target.dataset.id);
-      const habit = getHabits().find((h) => h.id === id);
-
+    }
+    else if (e.target.classList.contains("edit-btn")) {
+      const habit = getHabits().find(h => h.id === e.target.dataset.id);
       if (habit) {
         habitInput.value = habit.name;
         descriptionInput.value = habit.description;
         durationInput.value = habit.goal;
-
-        // Set edit mode
-        editId = id;
+        editId = e.target.dataset.id;
         editButton.style.display = "block";
         addButton.style.display = "none";
       }
     }
   });
+
   editButton.addEventListener("click", () => {
     const name = habitInput.value.trim();
     const description = descriptionInput.value.trim();
@@ -88,31 +76,21 @@ function initApp() {
 
     if (editId && name && duration) {
       editHabit(editId, name, description, duration);
-      renderHabits();
-      updateStats();
-
-      // Reset form and UI
-      editId = null;
       habitInput.value = "";
       descriptionInput.value = "";
       durationInput.value = "";
+      editId = null;
       editButton.style.display = "none";
       addButton.style.display = "block";
+      renderHabits();
+      updateStats();
     }
   });
 
-  // Stats header event listeners
-  document
-    .getElementById("total-habits-card")
-    .addEventListener("click", () => renderHabits("all"));
-  document
-    .getElementById("completed-habits-card")
-    .addEventListener("click", () => renderHabits("completed"));
-  document
-    .getElementById("active-streaks-card")
-    .addEventListener("click", () => renderHabits("active"));
+  // Stats filters
+  document.getElementById("total-habits-card").addEventListener("click", () => renderHabits("all"));
+  document.getElementById("completed-habits-card").addEventListener("click", () => renderHabits("completed"));
+  document.getElementById("active-streaks-card").addEventListener("click", () => renderHabits("active"));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initApp();
-});
+document.addEventListener("DOMContentLoaded", initApp);
